@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { createProject, updateProject, uploadProjectImage, deleteProjectImage } from "@/lib/actions";
+import { createProject, updateProject, uploadProjectImage, deleteProjectImage } from "@/lib/actions/projects";
 import { generateSlug } from "@/lib/utils";
 import { toast } from "sonner";
 import { X, Upload, Loader2, Plus } from "lucide-react";

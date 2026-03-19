@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getSiteLinks } from "@/lib/queries";
-import { saveSiteLinks } from "@/lib/actions";
+import { saveSiteLinks } from "@/lib/actions/admin";
 import { Github, Linkedin, FileText, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getProjectById, getProjectContent, getProjectImages } from "@/lib/queries";
+import { getProjectById, getProjectBySlug, getProjectContent, getProjectImages } from "@/lib/queries";
 import ProjectForm from "@/components/admin/ProjectForm";
 import type { Project, ProjectContent, ProjectImage } from "@/types";
 import { toast } from "sonner";
@@ -17,16 +17,31 @@ export default function EditProjectPage() {
 
   useEffect(() => {
     async function load() {
+      if (!id) return;
+      setLoading(true);
       try {
-        const [p, c, i] = await Promise.all([
-          getProjectById(id),
-          getProjectContent(id),
-          getProjectImages(id),
-        ]);
-        setProject(p);
-        setContent(c);
-        setImages(i);
-      } catch {
+        console.log("Fetching project with identifier:", id);
+        let p = await getProjectById(id);
+        
+        // Fallback: search by slug if ID doesn't return a document
+        if (!p) {
+          console.log("Project not found by ID, trying slug...");
+          p = await getProjectBySlug(id);
+        }
+
+        if (p) {
+          const [c, i] = await Promise.all([
+            getProjectContent(p.id),
+            getProjectImages(p.id),
+          ]);
+          setProject(p);
+          setContent(c);
+          setImages(i);
+        } else {
+          console.warn("Project not found by ID or Slug:", id);
+        }
+      } catch (error) {
+        console.error("Error loading project:", error);
         toast.error("Failed to load project.");
       } finally {
         setLoading(false);

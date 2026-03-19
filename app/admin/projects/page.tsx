@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
-import { deleteProject } from "@/lib/actions";
+import { deleteProject } from "@/lib/actions/projects";
 import { Plus, Pencil, Trash2, Star } from "lucide-react";
 import { toast } from "sonner";
 import type { Project } from "@/types";
