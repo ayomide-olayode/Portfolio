@@ -23,14 +23,14 @@ export default async function ContactPage() {
       id: "email",
       icon: Mail,
       label: "Email",
-      value: "alex@example.com",
-      href: "mailto:alex@example.com",
+      value: "olayodea93@gmail.com",
+      href: "mailto:olayodea93@gmail.com",
     },
     ...(links.github?.url
-      ? [{ id: "github", icon: Github, label: "GitHub", value: "@alexmorgan", href: links.github.url }]
+      ? [{ id: "github", icon: Github, label: "GitHub", value: "@ayomide-olayode", href: links.github.url }]
       : []),
     ...(links.linkedin?.url
-      ? [{ id: "linkedin", icon: Linkedin, label: "LinkedIn", value: "Alex Morgan", href: links.linkedin.url }]
+      ? [{ id: "linkedin", icon: Linkedin, label: "LinkedIn", value: "Ayomide Olayode", href: links.linkedin.url }]
       : []),
     ...(links.cv?.url
       ? [{ id: "cv", icon: FileText, label: "Resume / CV", value: "Download PDF", href: links.cv.url }]
@@ -99,7 +99,7 @@ export default async function ContactPage() {
                 frontend craft matters.
               </p>
               <Link
-                href="mailto:alex@example.com"
+                href="mailto:olayodea93@gmail.com"
                 className="inline-flex items-center gap-2 rounded-md bg-purple-600 px-5 py-2.5 font-inter text-sm font-medium text-white transition-colors hover:bg-purple-700"
               >
                 <Mail className="h-4 w-4" />

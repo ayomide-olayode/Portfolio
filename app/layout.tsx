@@ -28,13 +28,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Alex Morgan · Frontend Engineer",
+    title: "Ayomide Olayode | Frontend Engineer",
     description: "Frontend Engineer specializing in React, Next.js, and TypeScript.",
-    siteName: "Alex Morgan Portfolio",
+    siteName: "Ayomide Olayode Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Morgan · Frontend Engineer",
+    title: "Ayomide Olayode | Frontend Engineer",
     description: "Frontend Engineer specializing in React, Next.js, and TypeScript.",
   },
   robots: {
