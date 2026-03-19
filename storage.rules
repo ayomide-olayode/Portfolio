@@ -1,0 +1,25 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Public read for all files
+    match /{allPaths=**} {
+      allow read: if true;
+    }
+
+    // Admin-only writes for project images
+    match /projects/{projectId}/images/{fileName} {
+      allow write: if isAdmin();
+    }
+
+    // Admin-only writes for CV
+    match /cv/{fileName} {
+      allow write: if isAdmin();
+    }
+
+    function isAdmin() {
+      return request.auth != null &&
+             firestore.exists(/databases/(default)/documents/admin_users/$(request.auth.uid));
+    }
+  }
+}
