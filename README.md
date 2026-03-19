@@ -1,4 +1,4 @@
-```
+
 # Modern Portfolio — Ayomide Olayode
 
 A high-performance, developer-focused portfolio website with a full admin panel. Built with Next.js 16, TypeScript, Tailwind CSS, and Firebase.
