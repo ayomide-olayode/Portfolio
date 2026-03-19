@@ -6,12 +6,13 @@ import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { getProjectBySlug, getProjectContent, getProjectImages } from "@/lib/queries";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   try {
-    const project = await getProjectBySlug(params.slug);
+    const project = await getProjectBySlug(slug);
     if (!project) return { title: "Project Not Found" };
     return {
       title: project.title,
@@ -25,9 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export const revalidate = 60;
 
 export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params;
   let project, content, images: any[];
   try {
-    project = await getProjectBySlug(params.slug);
+    project = await getProjectBySlug(slug);
   } catch {
     notFound();
   }

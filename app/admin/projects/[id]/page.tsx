@@ -9,6 +9,7 @@ import { toast } from "sonner";
 
 export default function EditProjectPage() {
   const { id } = useParams<{ id: string }>();
+  console.log("EditProjectPage ID:", id);
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<Project | null>(null);
   const [content, setContent] = useState<ProjectContent | null>(null);
