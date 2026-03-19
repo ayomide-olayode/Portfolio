@@ -1,4 +1,4 @@
-"use server";
+// Client-side Firebase actions
 
 import {
   collection,
