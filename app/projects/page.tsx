@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
 import { getAllProjects } from "@/lib/queries";
+import { serializeTimestamp } from "@/lib/utils";
 import ClientProjectList from "./ClientProjectList";
+import type { ProjectSerialized } from "@/types";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "A collection of frontend projects I've built—from side experiments to production applications.",
+  description:
+    "A collection of frontend projects I've built—from side experiments to production applications.",
 };
 
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  let projects: any[] = [];
+  let projects: ProjectSerialized[] = [];
   try {
-    projects = await getAllProjects();
+    const fetchedProjects = await getAllProjects();
+    // Serialize Timestamps before passing to Client Component
+    projects = fetchedProjects.map((project) => ({
+      ...project,
+      createdAt: serializeTimestamp(project.createdAt),
+      updatedAt: serializeTimestamp(project.updatedAt),
+    }));
   } catch {
     // Firebase might not be configured
   }
@@ -26,14 +35,14 @@ export default async function ProjectsPage() {
         {/* Header */}
         <div className="mb-16">
           <p className="mb-3 font-mono text-sm font-semibold tracking-widest text-purple-500">
-            // PORTFOLIO
+            PORTFOLIO
           </p>
           <h1 className="mb-4 font-sora text-4xl font-bold tracking-tight text-foreground md:text-6xl drop-shadow-sm">
             All Projects
           </h1>
           <p className="max-w-xl font-inter text-base leading-relaxed text-muted-foreground">
-            A continuous log of my technical experiments, production applications, and
-            open-source tooling.
+            A continuous log of my technical experiments, production
+            applications, and open-source tooling.
           </p>
         </div>
 

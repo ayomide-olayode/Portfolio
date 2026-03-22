@@ -17,22 +17,31 @@ import type { Project, ProjectContent, ProjectImage, SiteLink } from "@/types";
 export async function getAllProjects(): Promise<Project[]> {
   const q = query(collection(db, "projects"), orderBy("createdAt", "desc"));
   const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Project));
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Project);
 }
 
 export async function getFeaturedProjects(count = 3): Promise<Project[]> {
-  const q = query(
-    collection(db, "projects"),
-    where("featured", "==", true),
-    orderBy("createdAt", "desc"),
-    limit(count)
-  );
+  // Note: where + orderBy requires composite index, so we sort in JS instead
+  const q = query(collection(db, "projects"), where("featured", "==", true));
   const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Project));
+  const projects = snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Project);
+
+  // Sort by createdAt descending in JavaScript
+  return projects
+    .sort((a, b) => {
+      const timeA = a.createdAt.toDate?.().getTime?.() ?? 0;
+      const timeB = b.createdAt.toDate?.().getTime?.() ?? 0;
+      return timeB - timeA;
+    })
+    .slice(0, count);
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
-  const q = query(collection(db, "projects"), where("slug", "==", slug), limit(1));
+  const q = query(
+    collection(db, "projects"),
+    where("slug", "==", slug),
+    limit(1),
+  );
   const snap = await getDocs(q);
   if (snap.empty) return null;
   const d = snap.docs[0];
@@ -47,11 +56,13 @@ export async function getProjectById(id: string): Promise<Project | null> {
 
 // ─── Project Content ──────────────────────────────────────────────────────────
 
-export async function getProjectContent(projectId: string): Promise<ProjectContent | null> {
+export async function getProjectContent(
+  projectId: string,
+): Promise<ProjectContent | null> {
   const q = query(
     collection(db, "project_content"),
     where("projectId", "==", projectId),
-    limit(1)
+    limit(1),
   );
   const snap = await getDocs(q);
   if (snap.empty) return null;
@@ -61,14 +72,21 @@ export async function getProjectContent(projectId: string): Promise<ProjectConte
 
 // ─── Project Images ───────────────────────────────────────────────────────────
 
-export async function getProjectImages(projectId: string): Promise<ProjectImage[]> {
+export async function getProjectImages(
+  projectId: string,
+): Promise<ProjectImage[]> {
+  // Note: where + orderBy requires composite index, so we sort in JS instead
   const q = query(
     collection(db, "project_images"),
     where("projectId", "==", projectId),
-    orderBy("order", "asc")
   );
   const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as ProjectImage));
+  const images = snap.docs.map(
+    (d) => ({ id: d.id, ...d.data() }) as ProjectImage,
+  );
+
+  // Sort by order field in ascending order
+  return images.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
 
 // ─── Site Links ───────────────────────────────────────────────────────────────
@@ -83,7 +101,7 @@ export async function getSiteLinks(): Promise<Record<string, SiteLink>> {
       if (snap.exists()) {
         links[id] = { id: snap.id, ...snap.data() } as SiteLink;
       }
-    })
+    }),
   );
 
   return links;

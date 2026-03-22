@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { ArrowRight, Github, FileText, Terminal } from "lucide-react";
-import type { SiteLink } from "@/types";
+import type { SiteLinkSerialized } from "@/types";
 import { motion, Variants } from "framer-motion";
 
 interface HeroProps {
-  links: Record<string, SiteLink>;
+  links: Record<string, SiteLinkSerialized>;
 }
 
 const containerVariants: Variants = {
@@ -22,7 +22,11 @@ const containerVariants: Variants = {
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
 export default function Hero({ links }: HeroProps) {
@@ -31,14 +35,17 @@ export default function Hero({ links }: HeroProps) {
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-purple-600/20 blur-[120px] rounded-full pointer-events-none" />
 
-      <motion.div 
+      <motion.div
         className="max-container relative z-10 w-full"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         {/* Status Window / Badge */}
-        <motion.div variants={itemVariants} className="mb-8 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 shadow-[0_0_15px_rgba(124,58,237,0.15)]">
+        <motion.div
+          variants={itemVariants}
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 shadow-[0_0_15px_rgba(124,58,237,0.15)]"
+        >
           <Terminal className="h-4 w-4 text-purple-400" />
           <span className="font-mono text-xs font-semibold tracking-wide text-purple-300">
             SYSTEM.STATUS === 'AVAILABLE'
@@ -50,11 +57,17 @@ export default function Hero({ links }: HeroProps) {
         </motion.div>
 
         {/* Headline */}
-        <motion.h1 variants={itemVariants} className="font-sora text-5xl font-bold leading-[1.1] tracking-tighter text-foreground md:text-7xl lg:text-8xl drop-shadow-sm">
+        <motion.h1
+          variants={itemVariants}
+          className="font-sora text-5xl font-bold leading-[1.1] tracking-tighter text-foreground md:text-7xl lg:text-8xl drop-shadow-sm"
+        >
           Ayomide Olayode
         </motion.h1>
 
-        <motion.div variants={itemVariants} className="mt-4 flex flex-wrap items-center gap-4 md:mt-6">
+        <motion.div
+          variants={itemVariants}
+          className="mt-4 flex flex-wrap items-center gap-4 md:mt-6"
+        >
           <span className="font-sora text-xl font-medium text-purple-400 md:text-2xl drop-shadow-[0_0_12px_rgba(124,58,237,0.6)]">
             Frontend Engineer
           </span>
@@ -65,12 +78,20 @@ export default function Hero({ links }: HeroProps) {
         </motion.div>
 
         {/* Tagline */}
-        <motion.p variants={itemVariants} className="mt-6 max-w-2xl font-inter text-base leading-relaxed text-muted-foreground md:text-lg md:leading-loose">
-          Build. Optimize. Scale. Focused on structured, performant web applications and clean, maintainable code. Breathing life into designs with modern tech stacks.
+        <motion.p
+          variants={itemVariants}
+          className="mt-6 max-w-2xl font-inter text-base leading-relaxed text-muted-foreground md:text-lg md:leading-loose"
+        >
+          Build. Optimize. Scale. Focused on structured, performant web
+          applications and clean, maintainable code. Breathing life into designs
+          with modern tech stacks.
         </motion.p>
 
         {/* CTAs */}
-        <motion.div variants={itemVariants} className="mt-10 flex flex-wrap items-center gap-4">
+        <motion.div
+          variants={itemVariants}
+          className="mt-10 flex flex-wrap items-center gap-4"
+        >
           <Link
             href="/projects"
             className="group relative inline-flex items-center gap-2 overflow-hidden rounded-md bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,58,237,0.3)] transition-all hover:bg-purple-500 hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"

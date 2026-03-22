@@ -59,6 +59,28 @@ export interface ProjectFormData {
   featured: boolean;
 }
 
+// ─── Serializable Types (for Client Components) ────────────────────────────
+
+/**
+ * Serializable version of SiteLink with Timestamp converted to ISO string.
+ * Used when passing from Server Components to Client Components.
+ */
+export interface SiteLinkSerialized extends Omit<SiteLink, "updatedAt"> {
+  updatedAt: string;
+}
+
+/**
+ * Serializable version of Project with Timestamps converted to ISO strings.
+ * Used when passing from Server Components to Client Components.
+ */
+export interface ProjectSerialized extends Omit<
+  Project,
+  "createdAt" | "updatedAt"
+> {
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ProjectContentFormData {
   context: string;
   problem: string;

@@ -27,3 +27,20 @@ export function truncate(str: string, length: number): string {
   if (str.length <= length) return str;
   return str.slice(0, length).trimEnd() + "…";
 }
+
+// ─── Serialization ────────────────────────────────────────────────────────────
+
+/**
+ * Convert a Firestore Timestamp or Date to an ISO string.
+ * Handles both Firestore Timestamp objects (with toDate method) and regular Date objects.
+ */
+export function serializeTimestamp(timestamp: any): string {
+  if (!timestamp) return "";
+  if (typeof timestamp.toDate === "function") {
+    return timestamp.toDate().toISOString();
+  }
+  if (timestamp instanceof Date) {
+    return timestamp.toISOString();
+  }
+  return "";
+}

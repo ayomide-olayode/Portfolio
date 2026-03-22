@@ -38,12 +38,16 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <Link href="/" className="relative inline-block h-24 w-24 sm:h-32 sm:w-32 lg:h-40 lg:w-40 transition-transform hover:scale-105 active:scale-95">
-            <Image 
-              src="/logo.png" 
-              alt="Logo" 
-              fill 
-              className="drop-shadow-md object-contain" 
+          <Link
+            href="/"
+            className="relative inline-block h-24 w-24 sm:h-32 sm:w-32 lg:h-40 lg:w-40 transition-transform hover:scale-105 active:scale-95"
+          >
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              fill
+              sizes="(max-width: 640px) 96px, (max-width: 1024px) 128px, 160px"
+              className="drop-shadow-md object-contain"
               priority
             />
           </Link>
@@ -58,30 +62,40 @@ export default function Header() {
         >
           <nav className="flex items-center gap-1">
             {navLinks.map(({ href, label }) => {
-              const active = pathname === href || (href !== "/" && pathname.startsWith(href));
+              const active =
+                pathname === href ||
+                (href !== "/" && pathname.startsWith(href));
               return (
                 <Link
                   key={href}
                   href={href}
                   className="relative px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium transition-colors rounded-full"
                 >
-                  <span className={cn(
-                    "relative z-10 transition-colors duration-200 tracking-wide",
-                    active ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
-                  )}>
+                  <span
+                    className={cn(
+                      "relative z-10 transition-colors duration-200 tracking-wide",
+                      active
+                        ? "text-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
                     {label}
                   </span>
                   {active && (
                     <motion.div
                       layoutId="header-active-tab"
                       className="absolute inset-0 rounded-full bg-muted/80 border border-border/50"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </Link>
-              )
+              );
             })}
-            
+
             <div className="h-4 w-px bg-border/80 mx-1 sm:mx-2" />
 
             {/* Theme toggle */}
@@ -106,13 +120,17 @@ export default function Header() {
             <Sun className="h-4 w-4 dark:hidden" />
             <Moon className="h-4 w-4 hidden dark:block" />
           </button>
-          
+
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
           </button>
         </div>
       </div>
@@ -128,14 +146,18 @@ export default function Header() {
           >
             <nav className="flex flex-col p-6 gap-4">
               {navLinks.map(({ href, label }) => {
-                const active = pathname === href || (href !== "/" && pathname.startsWith(href));
+                const active =
+                  pathname === href ||
+                  (href !== "/" && pathname.startsWith(href));
                 return (
                   <Link
                     key={href}
                     href={href}
                     className={cn(
                       "text-lg font-medium transition-colors p-2 rounded-lg",
-                      active ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      active
+                        ? "bg-muted text-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                     )}
                   >
                     {label}

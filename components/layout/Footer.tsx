@@ -14,7 +14,7 @@ export default async function Footer() {
     <footer className="border-t border-border/60 py-10">
       <div className="max-container section-padding py-0 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-sm text-muted-foreground font-inter">
-          © {new Date().getFullYear()} Ayomide Olayode. Built with Next.js & TypeScript.
+          © {new Date().getFullYear()} Ayomide Olayode.
         </p>
 
         <div className="flex items-center gap-4">
